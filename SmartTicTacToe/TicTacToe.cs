@@ -33,9 +33,9 @@ namespace SmartTicTacToe
         /// </summary>
         /// <param name="xpos">X Coord for move</param>
         /// <param name="ypos">Y Coord for move</param>
-        public void Move(int xpos, int ypos)
+        public void Move(Coord movePos)
         {
-            board[xpos, ypos] = pturn;
+            board[movePos.x, movePos.y] = pturn;
             if (pturn == 0)
                 pturn = 1;
             else
@@ -49,26 +49,29 @@ namespace SmartTicTacToe
         /// Check if there is a winner in the board
         /// </summary>
         /// <returns>Returns 0 for X Win, 1 for Y Win, and 2 for No Winner</returns>
-        private int CheckWinner()
+        public int CheckWinner()
         {
-            for (int i = 0; i < 3; i++)
+            for (int a = 0; a < 2; a++)
             {
-                // Horizontal Victory
-                if (board[i, 0] != 2 && board[i, 1] != 2 && board[i, 2] != 2)
-                    return board[i, 0];
+                for (int i = 0; i < 3; i++)
+                {
+                    // Horizontal Victory
+                    if (board[i, 0] == a && board[i, 1] == a && board[i, 2] == a)
+                        return a;
 
-                // Vertical Victory
-                if (board[0, i] != 2 && board[1, i] != 2 && board[2, i] != 2)
-                    return board[0, i];
+                    // Vertical Victory
+                    if (board[0, i] == a && board[1, i] == a && board[2, i] == a)
+                        return a;
+                }
+
+                //Top Left - Bottom Right
+                if (board[0, 0] == a && board[1, 1] == a && board[2, 2] == a)
+                    return a;
+
+                // Top Right - Bottom Left
+                if (board[0, 2] == a && board[1, 1] == a && board[2, 0] == a)
+                    return a; 
             }
-
-            //Top Left - Bottom Right
-            if (board[0, 0] != 2 && board[1, 1] != 2 && board[2, 2] != 2)
-                return board[0, 0];
-
-            // Top Right - Bottom Left
-            if (board[0, 2] != 2 && board[1, 1] != 2 && board[2, 0] != 2)
-                return board[0, 2];
 
             return 2;
         }
@@ -86,6 +89,19 @@ namespace SmartTicTacToe
                 }
                 Console.WriteLine();
             }
+        }
+
+        /// <summary>
+        /// Gets the state of the board in a way the AI would understand
+        /// </summary>
+        /// <returns>Returns the state of the board as a string</returns>
+        public string GetBoardState()
+        {
+            string boardState = "";
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    boardState += board[i, j];
+            return boardState;
         }
     }
 }
