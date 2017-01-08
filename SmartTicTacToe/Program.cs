@@ -19,8 +19,8 @@ namespace SmartTicTacToe
         {
             TicTacToe t1 = new TicTacToe();
 
-            AI ai1 = new AI();
-            AI ai2 = new AI();
+            AI ai1 = new AI(false);
+            AI ai2 = new AI(false);
             
             while (t1.CheckWinner() == 2)
             {

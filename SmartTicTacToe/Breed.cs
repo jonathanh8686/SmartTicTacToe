@@ -18,7 +18,7 @@ namespace SmartTicTacToe
         {
             string[] allBoards = male.decisions.Keys.ToArray();
 
-            AI child = new AI();
+            AI child = new AI(false);
             child.decisions = new Dictionary<string, string>();
             string[] maleReactions = (from x in male.decisions
                                       select x.Value).ToArray();

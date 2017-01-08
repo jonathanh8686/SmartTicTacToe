@@ -14,12 +14,9 @@ namespace SmartTicTacToe
         /// <summary>
         /// Constructor to create an AI with all boards inside
         /// </summary>
-        public AI()
+        public AI(bool hasDecisions)
         {
-            // Create Decisions
-            string[] rawBoards = System.IO.File.ReadAllLines("boards.txt");
-            for (int i = 0; i < rawBoards.Length; i++)
-                decisions.Add(rawBoards[i], GetRandomReaction());
+            InitDecisions();
         }
 
         /// <summary>
@@ -31,6 +28,14 @@ namespace SmartTicTacToe
         public AI(AI father, AI mother, int mutateFactor)
         {
             decisions = Breed.BreedAI(father, mother, mutateFactor).decisions;
+        }
+
+        public void InitDecisions()
+        {
+            // Create Decisions
+            string[] rawBoards = System.IO.File.ReadAllLines("boards.txt");
+            for (int i = 0; i < rawBoards.Length; i++)
+                decisions.Add(rawBoards[i], GetRandomReaction());
         }
 
         /// <summary>
