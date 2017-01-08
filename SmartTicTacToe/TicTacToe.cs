@@ -33,7 +33,7 @@ namespace SmartTicTacToe
         /// </summary>
         /// <param name="xpos">X Coord for move</param>
         /// <param name="ypos">Y Coord for move</param>
-        public void Move(Coord movePos)
+        private void Move(Coord movePos)
         {
             board[movePos.x, movePos.y] = pturn;
             if (pturn == 0)
@@ -49,10 +49,8 @@ namespace SmartTicTacToe
         /// Check if there is a winner in the board
         /// </summary>
         /// <returns>Returns 0 for X Win, 1 for Y Win, and 2 for No Winner (3 for Tie)</returns>
-        public int CheckWinner()
+        private int CheckWinner()
         {
-            
-
             for (int a = 0; a < 2; a++)
             {
                 for (int i = 0; i < 3; i++)
@@ -89,7 +87,7 @@ namespace SmartTicTacToe
         /// <summary>
         /// Prints out the board
         /// </summary>
-        public void PrintBoard()
+        private void PrintBoard()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -103,13 +101,32 @@ namespace SmartTicTacToe
         /// Gets the state of the board in a way the AI would understand
         /// </summary>
         /// <returns>Returns the state of the board as a string</returns>
-        public string GetBoardState()
+        private string GetBoardState()
         {
             string boardState = "";
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
                     boardState += board[i, j];
             return boardState;
+        }
+
+        /// <summary>
+        /// Plays a game between two AI's
+        /// </summary>
+        /// <param name="ai1">Player 1</param>
+        /// <param name="ai2">Player 2</param>
+        /// <returns>1 for X win, 2 for O win, 3 for Tie</returns>
+        public int PlayGame(AI ai1, AI ai2)
+        {
+            while (CheckWinner() == 2)
+            {
+                Move(ai1.GetMove(GetBoardState()));
+                if (CheckWinner() != 2)
+                    break;
+                Move(ai2.GetMove(GetBoardState()));
+            }
+            PrintBoard();
+            return CheckWinner();
         }
     }
 }

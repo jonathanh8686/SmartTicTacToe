@@ -16,7 +16,8 @@ namespace SmartTicTacToe
         /// </summary>
         public AI(bool hasDecisions)
         {
-            InitDecisions();
+            if(hasDecisions)
+                InitDecisions();
         }
 
         /// <summary>
@@ -30,10 +31,14 @@ namespace SmartTicTacToe
             decisions = Breed.BreedAI(father, mother, mutateFactor).decisions;
         }
 
+        /// <summary>
+        /// Initalizes all the Decisions
+        /// Use for AI's that will be breeded
+        /// </summary>
         public void InitDecisions()
         {
             // Create Decisions
-            string[] rawBoards = System.IO.File.ReadAllLines("boards.txt");
+            string[] rawBoards = System.IO.File.ReadAllLines(@"C:\Users\jonathanh8686\Source\Repos\SmartTicTacToe\SmartTicTacToe\boards.txt");
             for (int i = 0; i < rawBoards.Length; i++)
                 decisions.Add(rawBoards[i], GetRandomReaction());
         }

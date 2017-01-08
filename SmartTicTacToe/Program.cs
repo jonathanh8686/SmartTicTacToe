@@ -19,22 +19,12 @@ namespace SmartTicTacToe
         {
             TicTacToe t1 = new TicTacToe();
 
-            AI ai1 = new AI(false);
-            AI ai2 = new AI(false);
-            
-            while (t1.CheckWinner() == 2)
-            {
-                t1.Move(ai1.GetMove(t1.GetBoardState()));
-                t1.PrintBoard();
-                Console.WriteLine("");
-                Console.WriteLine("");
-                if (t1.CheckWinner() != 2)
-                    break;
+            AI ai1 = new AI(true);
+            AI ai2 = new AI(true);
 
-                t1.Move(ai2.GetMove(t1.GetBoardState()));
-                t1.PrintBoard();
-                Console.WriteLine("");
-                Console.WriteLine("");
+            for (int i = 0; i < 500; i++)
+            {
+                t1.PlayGame(ai1, ai2); 
             }
 
             Console.ReadLine();
