@@ -10,7 +10,7 @@ namespace SmartTicTacToe
     class AI
     {
 
-        Dictionary<string, string> decisions = new Dictionary<string, string>();
+        public Dictionary<string, string> decisions = new Dictionary<string, string>();
         /// <summary>
         /// Constructor to create an AI with all boards inside
         /// </summary>
@@ -20,6 +20,17 @@ namespace SmartTicTacToe
             string[] rawBoards = System.IO.File.ReadAllLines("boards.txt");
             for (int i = 0; i < rawBoards.Length; i++)
                 decisions.Add(rawBoards[i], GetRandomReaction());
+        }
+
+        /// <summary>
+        /// Constructor to create new AI using parents
+        /// </summary>
+        /// <param name="father">First AI</param>
+        /// <param name="mother">Second AI</param>
+        /// <param name="mutateFactor">The chance of a mutation, 1/mutationFactor</param>
+        public AI(AI father, AI mother, int mutateFactor)
+        {
+            decisions = Breed.BreedAI(father, mother, mutateFactor).decisions;
         }
 
         /// <summary>

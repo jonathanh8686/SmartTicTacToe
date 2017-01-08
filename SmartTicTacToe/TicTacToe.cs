@@ -48,9 +48,11 @@ namespace SmartTicTacToe
         /// <summary>
         /// Check if there is a winner in the board
         /// </summary>
-        /// <returns>Returns 0 for X Win, 1 for Y Win, and 2 for No Winner</returns>
+        /// <returns>Returns 0 for X Win, 1 for Y Win, and 2 for No Winner (3 for Tie)</returns>
         public int CheckWinner()
         {
+            
+
             for (int a = 0; a < 2; a++)
             {
                 for (int i = 0; i < 3; i++)
@@ -73,6 +75,14 @@ namespace SmartTicTacToe
                     return a; 
             }
 
+            bool isTie = true;
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    if (board[i, j] == 2)
+                        isTie = false;
+            if (isTie)
+                return 3;
+
             return 2;
         }
 
@@ -84,9 +94,7 @@ namespace SmartTicTacToe
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
-                {
                     Console.Write(board[i, j] + " ");
-                }
                 Console.WriteLine();
             }
         }

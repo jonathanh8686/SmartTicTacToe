@@ -21,6 +21,7 @@ namespace SmartTicTacToe
 
             AI ai1 = new AI();
             AI ai2 = new AI();
+            
             while (t1.CheckWinner() == 2)
             {
                 t1.Move(ai1.GetMove(t1.GetBoardState()));
@@ -35,6 +36,7 @@ namespace SmartTicTacToe
                 Console.WriteLine("");
                 Console.WriteLine("");
             }
+
             Console.ReadLine();
         }
     }
