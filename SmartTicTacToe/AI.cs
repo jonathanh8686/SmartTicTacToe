@@ -38,7 +38,7 @@ namespace SmartTicTacToe
         public void InitDecisions()
         {
             // Create Decisions
-            string[] rawBoards = System.IO.File.ReadAllLines(@"C:\Users\jonathanh8686\Source\Repos\SmartTicTacToe\SmartTicTacToe\boards.txt");
+            string[] rawBoards = System.IO.File.ReadAllLines(@"boards.txt");
             for (int i = 0; i < rawBoards.Length; i++)
                 decisions.Add(rawBoards[i], GetRandomReaction());
         }
