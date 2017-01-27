@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace SmartTicTacToe
 {
+    
     class AI
     {
-        public Dictionary<string, string> Decisions = new Dictionary<string, string>();
 
+        public Dictionary<string, string> decisions = new Dictionary<string, string>();
         /// <summary>
         /// Constructor to create an AI with all boards inside
         /// </summary>
         public AI(bool hasDecisions)
         {
-            if (hasDecisions)
+            if(hasDecisions)
                 InitDecisions();
         }
 
@@ -27,7 +28,7 @@ namespace SmartTicTacToe
         /// <param name="mutateFactor">The chance of a mutation, 1/mutationFactor</param>
         public AI(AI father, AI mother, int mutateFactor)
         {
-            Decisions = Breed.BreedAI(father, mother, mutateFactor).Decisions;
+            decisions = Breed.BreedAI(father, mother, mutateFactor).decisions;
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace SmartTicTacToe
         public void InitDecisions()
         {
             // Create Decisions
-            string[] rawBoards = System.IO.File.ReadAllLines(@"C:\Users\jonathanh8686\Source\Repos\SmartTicTacToe\SmartTicTacToe\boards.txt");
-            foreach (var t in rawBoards)
-                Decisions.Add(t, GetRandomReaction());
+            string[] rawBoards = System.IO.File.ReadAllLines(@"boards.txt");
+            for (int i = 0; i < rawBoards.Length; i++)
+                decisions.Add(rawBoards[i], GetRandomReaction());
         }
 
         /// <summary>
@@ -50,12 +51,14 @@ namespace SmartTicTacToe
         public Coord GetMove(string boardState)
         {
             Coord moveCoord = new Coord();
-            char[] decision = Decisions[boardState].ToCharArray();
+            char[] decision = decisions[boardState].ToCharArray();
             foreach (char i in decision)
             {
-                if (boardState.ToCharArray()[i - '0'] != '2') continue;
-                moveCoord.X = (i - '0') / 3;
-                moveCoord.Y = (i - '0') % 3;
+                if(boardState.ToCharArray()[i - '0'] == '2')
+                {
+                    moveCoord.x = (i - '0') / 3;
+                    moveCoord.y = (i - '0') % 3;
+                }
             }
             return moveCoord;
         }
@@ -68,7 +71,7 @@ namespace SmartTicTacToe
         public string GetRandomReaction()
         {
             string rtnString = "";
-            int[] numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+            int[] numbers = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             // Mix up the numbers 0-8 for a random reaction
@@ -78,5 +81,7 @@ namespace SmartTicTacToe
 
             return rtnString;
         }
+
+
     }
 }

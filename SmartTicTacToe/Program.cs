@@ -7,52 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-// TODO: Add fitness and have a order to who survives
-// TODO: Instead of having the 2 top survive, make it random with ~80% dying
 namespace SmartTicTacToe
 {
     struct Coord
     {
-        public int X, Y;
+        public int x, y;
     }
     class Program
     {
         static void Main(string[] args)
         {
-            List<AI> population = new List<AI>();
-            List<AI> winners = new List<AI>();
+            TicTacToe t1 = new TicTacToe();
 
-            // Init the first popluation
-            // Everything after this will be initalized through breeding
-            for (int initPop = 0; initPop < 256; initPop++)
-                population.Add(new AI(true));
+            AI[] population = new AI[128];
+            for (int initPop = 0; initPop < population.Length; initPop++)
+                population[initPop] = new AI(true);
 
-            for (int gens = 0; gens < 10; gens++)
+            int elimRounds = int.Parse(Math.Log(population.Length, 2).ToString()) - 1;
+            for (int i = 0; i < elimRounds; i++)
             {
-                for (int i = 0; i < 7; i++)
+                AI[] winners = new AI[population.Length / 2];
+                for (int j = 0; j < population.Length; j += 2)
                 {
-                    winners = new List<AI>();
-                    for (int j = 0; j < population.Count; j += 2)
-                    {
-                        TicTacToe game = new TicTacToe();
-                        int win = game.PlayGame(population[j], population[j + 1]);
-                        if (win == 0)
-                            winners.Add(population[j]);
-                        else
-                            winners.Add(population[j + 1]);
-                    }
-                    population = winners;
+                    int winner = t1.PlayGame(population[j], population[j + 1]);
+                    if (winner == 0 || winner == 1)
+                        winners[j / 2] = population[j + winner];
+                    if (winner == 3)
+                        winners[j / 2] = population[j];
                 }
-                for (int initPop = 0; initPop < 254; initPop++)
-                    population.Add(Breed.BreedAI(population[0], population[1], 5));  
-            }
-
-            for (int i = 0; i < 100; i++)
-            {
-                TicTacToe t1 = new TicTacToe();
-                AI newAI = new AI(true);
-                Console.WriteLine(t1.PlayGame(newAI, population[0]));
+                population = winners; 
             }
 
             Console.ReadLine();
