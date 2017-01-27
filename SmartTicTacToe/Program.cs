@@ -2,20 +2,16 @@
 // By: Jonathan Hsieh - 12/15/2016
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartTicTacToe
 {
     struct Coord
     {
-        public int x, y;
+        public int X, Y;
     }
     class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             TicTacToe t1 = new TicTacToe();
 

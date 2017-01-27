@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartTicTacToe
 {
@@ -15,8 +11,8 @@ namespace SmartTicTacToe
         // Class used as the main game class
         // Create instances of game
 
-        int[,] _board = new int[3, 3];
-        int _pturn = 0; // 0 = X's Turn  1 = O's Turn
+        private readonly int[,] _board = new int[3, 3];
+        private int _pturn; // 0 = X's Turn  1 = O's Turn
         /// <summary>
         /// Initalizes the board to all = 3
         /// </summary>
@@ -31,15 +27,11 @@ namespace SmartTicTacToe
         /// <summary>
         /// Gets the position to set = to pturn and makes a move there
         /// </summary>
-        /// <param name="xpos">X Coord for move</param>
-        /// <param name="ypos">Y Coord for move</param>
+        /// <param name="movePos">Coord for move</param>
         private void Move(Coord movePos)
         {
             _board[movePos.X, movePos.Y] = _pturn;
-            if (_pturn == 0)
-                _pturn = 1;
-            else
-                _pturn = 0;
+            _pturn = _pturn == 0 ? 1 : 0;
 
             //if (CheckWinner() != 2)
             //    Console.WriteLine(CheckWinner());
@@ -78,15 +70,13 @@ namespace SmartTicTacToe
                 for (int j = 0; j < 3; j++)
                     if (_board[i, j] == 2)
                         isTie = false;
-            if (isTie)
-                return 3;
-
-            return 2;
+            return isTie ? 3 : 2;
         }
 
         /// <summary>
         /// Prints out the board
         /// </summary>
+        // ReSharper disable once UnusedMember.Local
         private void PrintBoard()
         {
             for (int i = 0; i < 3; i++)
