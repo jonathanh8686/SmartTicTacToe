@@ -9,40 +9,55 @@ namespace SmartTicTacToe
     class Breed
     {
         /// <summary>
+        /// Takes in a list of parents and outputs parents.count/2 children
+        /// </summary>
+        /// <param name="parents">Parents to be bred</param>
+        /// <param name="mutationFactor">1/mutationFactor chance of mutation</param>
+        /// <returns></returns>
+        public static List<AI> BreedAIList(List<AI> parents, int mutationFactor)
+        {
+            List<AI> children = new List<AI>();
+            for (int i = 0; i < parents.Count; i+=2)
+                children.Add(new AI(parents[i], parents[i + 1], mutationFactor));
+            return children;
+        }
+
+        /// <summary>
         /// Takes two AIs and breeds their decisions together
         /// </summary>
         /// <param name="male">First AI to breed</param>
-        /// <param name="female">Second aI to breed</param>
+        /// <param name="female">Second AI to breed</param>
+        /// <param name="mutationFactor">1/mutationFactor chance of mutation</param>
         /// <returns>Returns the new AI (The child of the male and female)</returns>
         public static AI BreedAI(AI male, AI female, int mutationFactor)
         {
-            string[] allBoards = male.decisions.Keys.ToArray();
+            string[] allBoards = male.Decisions.Keys.ToArray();
 
             AI child = new AI(false);
-            child.decisions = new Dictionary<string, string>();
-            string[] maleReactions = (from x in male.decisions
+            child.Decisions = new Dictionary<string, string>();
+            string[] maleReactions = (from x in male.Decisions
                                       select x.Value).ToArray();
 
-            string[] femaleReactions = (from x in female.decisions
+            string[] femaleReactions = (from x in female.Decisions
                                         select x.Value).ToArray();
 
             for (int breedReact = 0; breedReact < maleReactions.Length; breedReact++)
             {
-                child.decisions.Add(allBoards[breedReact], BreedReaction(maleReactions[breedReact],
+                child.Decisions.Add(allBoards[breedReact], BreedReaction(maleReactions[breedReact],
                     femaleReactions[breedReact], mutationFactor));
             }
 
             return child;
         }
 
-    /// <summary>
-    /// Takes two strings and combines them, small mutations happen with chance mutationFactor/mutationFactor+2 chance
-    /// </summary>
-    /// <param name="maleReact">The Male reactions string for the breeding</param>
-    /// <param name="femaleReact">The Female reactions string for the breeding</param>
-    /// <param name="mutationFactor">The chance that the child mutates</param>
-    /// <returns>Returns the child reaction</returns>
-    private static string BreedReaction(string maleReact, string femaleReact, int mutationFactor)
+        /// <summary>
+        /// Takes two strings and combines them, small mutations happen with chance mutationFactor/mutationFactor+2 chance
+        /// </summary>
+        /// <param name="maleReact">The Male reactions string for the breeding</param>
+        /// <param name="femaleReact">The Female reactions string for the breeding</param>
+        /// <param name="mutationFactor">The chance that the child mutates</param>
+        /// <returns>Returns the child reaction</returns>
+        private static string BreedReaction(string maleReact, string femaleReact, int mutationFactor)
         {
             Random random = new Random();
             string childReact = "";

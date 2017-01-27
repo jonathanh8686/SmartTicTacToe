@@ -15,8 +15,8 @@ namespace SmartTicTacToe
         // Class used as the main game class
         // Create instances of game
 
-        int[,] board = new int[3, 3];
-        int pturn = 0; // 0 = X's Turn  1 = O's Turn
+        int[,] _board = new int[3, 3];
+        int _pturn = 0; // 0 = X's Turn  1 = O's Turn
         /// <summary>
         /// Initalizes the board to all = 3
         /// </summary>
@@ -25,7 +25,7 @@ namespace SmartTicTacToe
             // Code used for initalizing the board - All values as 2
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
-                    board[i, j] = 2;
+                    _board[i, j] = 2;
         }
 
         /// <summary>
@@ -35,14 +35,14 @@ namespace SmartTicTacToe
         /// <param name="ypos">Y Coord for move</param>
         private void Move(Coord movePos)
         {
-            board[movePos.x, movePos.y] = pturn;
-            if (pturn == 0)
-                pturn = 1;
+            _board[movePos.X, movePos.Y] = _pturn;
+            if (_pturn == 0)
+                _pturn = 1;
             else
-                pturn = 0;
+                _pturn = 0;
 
-            if (CheckWinner() != 2)
-                Console.WriteLine(CheckWinner());
+            //if (CheckWinner() != 2)
+            //    Console.WriteLine(CheckWinner());
         }
 
         /// <summary>
@@ -56,27 +56,27 @@ namespace SmartTicTacToe
                 for (int i = 0; i < 3; i++)
                 {
                     // Horizontal Victory
-                    if (board[i, 0] == a && board[i, 1] == a && board[i, 2] == a)
+                    if (_board[i, 0] == a && _board[i, 1] == a && _board[i, 2] == a)
                         return a;
 
                     // Vertical Victory
-                    if (board[0, i] == a && board[1, i] == a && board[2, i] == a)
+                    if (_board[0, i] == a && _board[1, i] == a && _board[2, i] == a)
                         return a;
                 }
 
                 //Top Left - Bottom Right
-                if (board[0, 0] == a && board[1, 1] == a && board[2, 2] == a)
+                if (_board[0, 0] == a && _board[1, 1] == a && _board[2, 2] == a)
                     return a;
 
                 // Top Right - Bottom Left
-                if (board[0, 2] == a && board[1, 1] == a && board[2, 0] == a)
+                if (_board[0, 2] == a && _board[1, 1] == a && _board[2, 0] == a)
                     return a; 
             }
 
             bool isTie = true;
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
-                    if (board[i, j] == 2)
+                    if (_board[i, j] == 2)
                         isTie = false;
             if (isTie)
                 return 3;
@@ -92,7 +92,7 @@ namespace SmartTicTacToe
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
-                    Console.Write(board[i, j] + " ");
+                    Console.Write(_board[i, j] + " ");
                 Console.WriteLine();
             }
         }
@@ -106,7 +106,7 @@ namespace SmartTicTacToe
             string boardState = "";
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
-                    boardState += board[i, j];
+                    boardState += _board[i, j];
             return boardState;
         }
 
@@ -125,7 +125,7 @@ namespace SmartTicTacToe
                     break;
                 Move(ai2.GetMove(GetBoardState()));
             }
-            PrintBoard();
+            //PrintBoard();
             return CheckWinner();
         }
     }
